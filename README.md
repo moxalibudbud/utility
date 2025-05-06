@@ -1,2 +1,2 @@
 # utility
-Javascript Utilities for all my project
+Reusable utilities and modules for all my project
