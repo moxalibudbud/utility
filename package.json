@@ -1,0 +1,11 @@
+{
+  "name": "utility",
+  "private": true,
+  "version": "0.0.1",
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "tsconfig-paths": "^4.2.0"
+  }
+}
