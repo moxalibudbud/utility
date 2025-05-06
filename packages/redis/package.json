@@ -1,6 +1,6 @@
 {
   "name": "@moxalibudbud/redis",
-  "version": "0.0.1-alpha",
+  "version": "0.0.2-alpha",
   "description": "Simple wrapper of @azure/storage-blob",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\" && tsc --build tsconfig.json",
+    "build": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\" && tsc --noEmit && tsc --build tsconfig.json",
     "test": "jest",
     "test:prod": "jest --testPathPattern=dist/tests --detectOpenHandles",
     "test:dev": "jest --testPathPattern=src/tests --detectOpenHandles"

@@ -7,7 +7,6 @@
     "esModuleInterop": true,
     "strict": true,
     "declaration": true,
-    "declarationMap": true,
-    "outDir": "dist"
+    "declarationMap": true
   }
 }
