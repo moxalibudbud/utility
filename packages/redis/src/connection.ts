@@ -1,21 +1,25 @@
-import IORedis from 'ioredis';
-import { redisOptions } from './options';
+import IORedis, { RedisOptions } from 'ioredis';
+import { defaultOptions } from './options';
 
 let connection: IORedis | null = null;
 
-export const getConnection = (): IORedis => {
+type Options = RedisOptions & { connectionName?: string };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getConnection = (options: Options = { connectionName: 'moxalibudbud_redis'}): IORedis => {
   if (!connection) {
-    connection = createConnection('main');
+    connection = createConnection(options);
   }
 
   return connection;
 };
 
-export const createConnection = (name: string): IORedis => {
-  const newConnection = new IORedis(redisOptions);
+const createConnection = (customOptions: Options): IORedis => {
+  const options: Options = { ...defaultOptions, ...customOptions };
+  const connectionName = options?.connectionName || 'moxalibudbud_redis';
+  const newConnection = new IORedis(options);
 
   newConnection.on('connect', () => {
-    const connectionName = `${process.env.APP_NAME}_${name}_connection`;
     console.info('\u2713', `REDIS Server connected to ${connectionName}`);
     try {
       newConnection?.client('SETNAME', connectionName);
@@ -31,8 +35,9 @@ export const createConnection = (name: string): IORedis => {
   return newConnection;
 };
 
+
 export const isReady = async (): Promise<void> => {
-  const redis = getConnection(); // Ensure connection is initialized
+  const redis = getConnection()
   return new Promise((resolve, reject) => {
     const onError = (err: Error) => {
       console.error('\u2717', 'REDIS Server error:', err);
